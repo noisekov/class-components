@@ -1,12 +1,20 @@
-/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable */
+import { ThemeContext } from '../App'
 import './Search.css'
-import { Component } from 'react'
+import React, { Component, SyntheticEvent } from 'react'
 
 export default class Serach extends Component {
-    handleSubmit(e: { preventDefault: () => void }) {
-        e.preventDefault()
+    async handleSubmit(event: SyntheticEvent) {
+        event.preventDefault()
 
-        console.log('You clicked submit.')
+        const request = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${event.target[0].value}`,
+            {
+                method: 'GET',
+            }
+        )
+        const data = await request.json()
+        console.log(data)
     }
 
     render() {
