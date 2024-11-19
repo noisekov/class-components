@@ -1,7 +1,8 @@
 /* eslint-disable */
-import { ThemeContext } from '../App'
+import Pokemon from './Pokemon'
 import './Search.css'
 import React, { Component, SyntheticEvent } from 'react'
+export let Context = React.createContext('oppa')
 
 export default class Serach extends Component {
     async handleSubmit(event: SyntheticEvent) {

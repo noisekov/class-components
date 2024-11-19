@@ -1,13 +1,11 @@
 /* eslint-disable */
 import React, { Component } from 'react'
-import { ThemeContext } from '../App'
+import { Context } from './Serach'
 
 export default class Pokemon extends Component {
+    static contextType = Context
+
     render() {
-        return (
-            <ThemeContext.Consumer>
-                {(value) => <div>{value}</div>}
-            </ThemeContext.Consumer>
-        )
+        return <div>{this.context}</div>
     }
 }
