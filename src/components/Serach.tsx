@@ -1,9 +1,13 @@
 /* eslint-disable */
-import Pokemon from './Pokemon'
 import './Search.css'
 import React, { Component, SyntheticEvent } from 'react'
 export let Context = React.createContext('oppa')
 
+interface resultObjI {
+    name: string
+    abilities: string[]
+    sprites: string
+}
 export default class Serach extends Component {
     async handleSubmit(event: SyntheticEvent) {
         event.preventDefault()
@@ -15,7 +19,18 @@ export default class Serach extends Component {
             }
         )
         const data = await request.json()
-        console.log(data)
+        const resultObj: resultObjI = {
+            name: '',
+            abilities: [],
+            sprites: '',
+        }
+        resultObj['name'] = data['name']
+        resultObj['sprites'] = data['sprites']['front_default']
+        data['abilities'].forEach((ability: { ability: { name: string } }) => {
+            resultObj['abilities'].push(ability.ability.name)
+        })
+
+        localStorage.setItem('data', JSON.stringify(resultObj))
     }
 
     render() {
