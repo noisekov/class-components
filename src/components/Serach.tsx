@@ -56,7 +56,10 @@ export default class Serach extends Component {
 
             localStorage.setItem('data', JSON.stringify(resultObj));
         } catch (err) {
-            localStorage.setItem('data', '');
+            localStorage.setItem(
+                'data',
+                "{ name: '', abilities: [], sprites: ''}"
+            );
         } finally {
             this.setState({ isLoading: false });
         }
