@@ -1,13 +1,24 @@
-/* eslint-disable */
 import './Pokemon.css';
 import React, { Component } from 'react';
 import { Context } from './Serach';
 
+interface requestDataI {
+    name: string;
+    abilities: string[];
+    sprites: string;
+}
+
 export default class Pokemon extends Component {
     static contextType = Context;
-    constructor(props) {
+    data: requestDataI;
+
+    constructor(props: React.Component) {
         super(props);
-        this.data = JSON.parse(localStorage.getItem('data'));
+        const storedData = localStorage.getItem('data');
+        this.data =
+            storedData !== null
+                ? JSON.parse(storedData)
+                : { name: '', abilities: [], sprites: '' };
     }
 
     render() {
