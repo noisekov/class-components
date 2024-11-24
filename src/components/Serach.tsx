@@ -1,7 +1,6 @@
-/* eslint-disable */
 import './Search.css'
 import React, { Component, SyntheticEvent } from 'react'
-export let Context = React.createContext('oppa')
+export const Context = React.createContext('oppa')
 
 interface resultObjI {
     name: string
@@ -9,11 +8,16 @@ interface resultObjI {
     sprites: string
 }
 export default class Serach extends Component {
-    async handleSubmit(event: SyntheticEvent) {
+    async handleSubmit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
         event.preventDefault()
 
         const request = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${event.target[0].value}`,
+            `https://pokeapi.co/api/v2/pokemon/${
+                (
+                    (event.target as HTMLFormElement)
+                        ?.elements[0] as HTMLInputElement
+                ).value
+            }`,
             {
                 method: 'GET',
             }
