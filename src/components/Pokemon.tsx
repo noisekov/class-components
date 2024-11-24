@@ -1,13 +1,13 @@
 /* eslint-disable */
-import './Pokemon.css'
-import React, { Component } from 'react'
-import { Context } from './Serach'
+import './Pokemon.css';
+import React, { Component } from 'react';
+import { Context } from './Serach';
 
 export default class Pokemon extends Component {
-    static contextType = Context
+    static contextType = Context;
     constructor(props) {
-        super(props)
-        this.data = JSON.parse(localStorage.getItem('data'))
+        super(props);
+        this.data = JSON.parse(localStorage.getItem('data'));
     }
 
     render() {
@@ -20,6 +20,6 @@ export default class Pokemon extends Component {
                     abilities: {this.data.abilities.join(' ,')}
                 </p>
             </div>
-        )
+        );
     }
 }
