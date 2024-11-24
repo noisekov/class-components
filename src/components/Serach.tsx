@@ -1,7 +1,6 @@
 import Loader from './Loader';
 import './Search.css';
 import React, { Component, SyntheticEvent } from 'react';
-export const Context = React.createContext({});
 
 interface requestDataI {
     name: string;
@@ -10,59 +9,65 @@ interface requestDataI {
 }
 interface SerachState {
     isLoading: boolean;
+    requestData: object;
 }
 
-export default class Serach extends Component {
+interface SerachProps {
+    onInputData: (data: requestDataI) => void;
+}
+
+export default class Serach extends Component<SerachProps> {
     state: SerachState = {
         isLoading: false,
+        requestData: {},
     };
 
-    constructor(props: React.Component) {
+    constructor(props: SerachProps) {
         super(props);
         this.state = {
             isLoading: false,
+            requestData: {},
         };
+    }
+
+    componentDidMount() {
+        const storedData: string | null = localStorage.getItem('data');
+        this.setState({ isLoading: true });
+
+        this.request(storedData);
+    }
+
+    async request(value: string) {
+        const request = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${value}`,
+            {
+                method: 'GET',
+            }
+        );
+        const data = await request.json();
+        const resultObj: requestDataI = {
+            name: '',
+            abilities: [],
+            sprites: '',
+        };
+        resultObj['name'] = data['name'];
+        resultObj['sprites'] = data['sprites']['front_default'];
+        data['abilities'].forEach((ability: { ability: { name: string } }) => {
+            resultObj['abilities'].push(ability.ability.name);
+        });
+
+        this.setState({ isLoading: false, requestData: resultObj });
+        this.props.onInputData(resultObj);
     }
 
     async handleSubmit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
         event.preventDefault();
+        const inputValue = (
+            (event.target as HTMLFormElement)?.elements[0] as HTMLInputElement
+        ).value;
 
-        this.setState({ isLoading: true });
-        try {
-            const request = await fetch(
-                `https://pokeapi.co/api/v2/pokemon/${
-                    (
-                        (event.target as HTMLFormElement)
-                            ?.elements[0] as HTMLInputElement
-                    ).value
-                }`,
-                {
-                    method: 'GET',
-                }
-            );
-            const data = await request.json();
-            const resultObj: requestDataI = {
-                name: '',
-                abilities: [],
-                sprites: '',
-            };
-            resultObj['name'] = data['name'];
-            resultObj['sprites'] = data['sprites']['front_default'];
-            data['abilities'].forEach(
-                (ability: { ability: { name: string } }) => {
-                    resultObj['abilities'].push(ability.ability.name);
-                }
-            );
-
-            localStorage.setItem('data', JSON.stringify(resultObj));
-        } catch (err) {
-            localStorage.setItem(
-                'data',
-                "{ name: '', abilities: [], sprites: ''}"
-            );
-        } finally {
-            this.setState({ isLoading: false });
-        }
+        localStorage.setItem('data', inputValue);
+        this.request(inputValue);
     }
 
     render() {
