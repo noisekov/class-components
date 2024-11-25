@@ -2,6 +2,7 @@
     box-shadow: 0 0px 6px 3px white;
     border-radius: 25px;
     padding: 10px;
+    width: 320px;
 }
 
 .pokemon-card__text {

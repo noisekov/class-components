@@ -32,12 +32,13 @@ export default class Serach extends Component<SerachProps> {
 
     componentDidMount() {
         const storedData: string | null = localStorage.getItem('data');
-        this.setState({ isLoading: true });
 
-        this.request(storedData);
+        this.request(storedData ? storedData : '');
     }
 
     async request(value: string) {
+        this.setState({ isLoading: true });
+
         const request = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${value}`,
             {
@@ -45,16 +46,26 @@ export default class Serach extends Component<SerachProps> {
             }
         );
         const data = await request.json();
+
         const resultObj: requestDataI = {
             name: '',
             abilities: [],
             sprites: '',
         };
-        resultObj['name'] = data['name'];
-        resultObj['sprites'] = data['sprites']['front_default'];
-        data['abilities'].forEach((ability: { ability: { name: string } }) => {
-            resultObj['abilities'].push(ability.ability.name);
-        });
+
+        if (value) {
+            resultObj['name'] = data['name'];
+            resultObj['sprites'] = data['sprites']['front_default'];
+            data['abilities'].forEach(
+                (ability: { ability: { name: string } }) => {
+                    resultObj['abilities'].push(ability.ability.name);
+                }
+            );
+        } else {
+            data.results.forEach((pokemon: { name: string; url: string }) => {
+                resultObj['name'] += pokemon.name + ', ';
+            });
+        }
 
         this.setState({ isLoading: false, requestData: resultObj });
         this.props.onInputData(resultObj);
@@ -64,7 +75,7 @@ export default class Serach extends Component<SerachProps> {
         event.preventDefault();
         const inputValue = (
             (event.target as HTMLFormElement)?.elements[0] as HTMLInputElement
-        ).value;
+        ).value.trim();
 
         localStorage.setItem('data', inputValue);
         this.request(inputValue);

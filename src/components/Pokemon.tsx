@@ -9,41 +9,48 @@ interface requestDataI {
 }
 
 interface SerachState {
-    inputData: object;
+    inputData: requestDataI;
 }
 
-export default class Pokemon extends Component {
+interface SerachProps {
+    onInputData: requestDataI | object;
+}
+
+export default class Pokemon extends Component<SerachProps> {
     state: SerachState = {
-        inputData: {},
+        inputData: {
+            name: '',
+            abilities: [],
+            sprites: '',
+        },
     };
 
-    constructor(props: React.Component) {
+    constructor(props: SerachProps) {
         super(props);
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: SerachProps) {
         if (!equal(this.props.onInputData, prevProps.onInputData)) {
-            // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-            this.setState(this.props.onInputData);
+            this.setState({ inputData: this.props.onInputData });
         }
     }
 
     render() {
+        const { sprites, name, abilities } = this.state.inputData;
+
         return (
             <div className="pokemon-card">
                 <h1>Pokemon</h1>
                 <img
-                    src={this.state.sprites ? this.state.sprites : ''}
-                    alt={this.state.name ? this.state.name : ''}
+                    src={sprites ? sprites : ''}
+                    alt={name && sprites ? name : 'No data'}
                 />
                 <p className="pokemon-card__text">
-                    name: {this.state.name ? this.state.name : ''}
+                    name: {name ? name : 'No data'}
                 </p>
                 <p className="pokemon-card__text">
                     abilities:{' '}
-                    {this.state.abilities
-                        ? this.state.abilities.join(' ,')
-                        : ''}
+                    {abilities.length ? abilities.join(', ') : 'No data'}
                 </p>
             </div>
         );
