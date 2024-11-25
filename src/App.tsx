@@ -25,6 +25,13 @@ class App extends Component {
                 <div className="bottom">
                     <Pokemon onInputData={this.state.inputData} />
                 </div>
+                <button
+                    onClick={() => {
+                        throw new Error('Error');
+                    }}
+                >
+                    Error
+                </button>
             </div>
         );
     }

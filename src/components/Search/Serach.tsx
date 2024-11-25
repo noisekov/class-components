@@ -39,19 +39,25 @@ export default class Serach extends Component<SerachProps> {
     async request(value: string) {
         this.setState({ isLoading: true });
 
+        const resultObj: requestDataI = {
+            name: '',
+            abilities: [],
+            sprites: '',
+        };
         const request = await fetch(
             `https://pokeapi.co/api/v2/pokemon/${value}`,
             {
                 method: 'GET',
             }
         );
-        const data = await request.json();
+        const { status } = await request;
 
-        const resultObj: requestDataI = {
-            name: '',
-            abilities: [],
-            sprites: '',
-        };
+        if (status !== 200) {
+            this.setState({ isLoading: false, requestData: resultObj });
+            this.props.onInputData(resultObj);
+        }
+
+        const data = await request.json();
 
         if (value) {
             resultObj['name'] = data['name'];
