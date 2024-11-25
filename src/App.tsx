@@ -22,9 +22,6 @@ class App extends Component {
                 <div className="top">
                     <Serach onInputData={this.handleData} />
                 </div>
-                <div className="bottom">
-                    <Pokemon onInputData={this.state.inputData} />
-                </div>
                 <button
                     onClick={() => {
                         throw new Error('Error');
@@ -32,6 +29,9 @@ class App extends Component {
                 >
                     Error
                 </button>
+                <div className="bottom">
+                    <Pokemon onInputData={this.state.inputData} />
+                </div>
             </div>
         );
     }

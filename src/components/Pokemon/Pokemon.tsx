@@ -40,11 +40,15 @@ export default class Pokemon extends Component<SerachProps> {
 
         return (
             <div className="pokemon-card">
-                <h1>Pokemon</h1>
-                <img
-                    src={sprites ? sprites : ''}
-                    alt={name && sprites ? name : 'No data'}
-                />
+                <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
+                <div className="pokemon-card__image">
+                    <img
+                        src={sprites ? sprites : ''}
+                        alt={name && sprites ? name : 'No data'}
+                        width={150}
+                        height={150}
+                    />
+                </div>
                 <p className="pokemon-card__text">
                     name: {name ? name : 'No data'}
                 </p>
