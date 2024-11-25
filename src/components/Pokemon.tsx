@@ -49,7 +49,7 @@ export default class Pokemon extends Component<SerachProps> {
                     name: {name ? name : 'No data'}
                 </p>
                 <p className="pokemon-card__text">
-                    abilities:{' '}
+                    abilities:
                     {abilities.length ? abilities.join(', ') : 'No data'}
                 </p>
             </div>
