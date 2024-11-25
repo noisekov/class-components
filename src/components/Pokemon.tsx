@@ -1,5 +1,5 @@
 import './Pokemon.css';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
 
 interface requestDataI {
