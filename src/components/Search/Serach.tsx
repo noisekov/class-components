@@ -1,4 +1,4 @@
-import Loader from './Loader';
+import Loader from '../Loader/Loader';
 import './Search.css';
 import React, { Component, SyntheticEvent } from 'react';
 

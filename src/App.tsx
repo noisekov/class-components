@@ -1,7 +1,7 @@
 import './App.css';
 import React, { Component } from 'react';
-import Serach from './components/Serach';
-import Pokemon from './components/Pokemon';
+import Serach from './components/Search/Serach';
+import Pokemon from './components/Pokemon/Pokemon';
 
 interface SerachState {
     inputData: object;
