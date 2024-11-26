@@ -6,7 +6,10 @@ export default class ErrorPage extends Component {
         return (
             <div className="error-page">
                 <h1>Something went wrong</h1>
-                <button onClick={() => window.location.reload()}>
+                <button
+                    className="button"
+                    onClick={() => window.location.reload()}
+                >
                     Back to App
                 </button>
             </div>

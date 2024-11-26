@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import equal from 'fast-deep-equal';
 
 interface requestDataI {
-    name: string;
+    name: string[];
     abilities: string[];
     sprites: string;
 }
@@ -19,7 +19,7 @@ interface SerachProps {
 export default class Pokemon extends Component<SerachProps> {
     state: SerachState = {
         inputData: {
-            name: '',
+            name: [],
             abilities: [],
             sprites: '',
         },
@@ -40,22 +40,33 @@ export default class Pokemon extends Component<SerachProps> {
 
         return (
             <div className="pokemon-card">
-                <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
-                {name && sprites && (
+                <h1>
+                    {name.length
+                        ? name.length === 1
+                            ? 'Pokemon'
+                            : 'Pokemons'
+                        : 'Incorrect input value'}
+                </h1>
+                {name.length === 1 && sprites && (
                     <div className="pokemon-card__image">
                         <img
                             src={sprites}
-                            alt={name}
+                            alt={name[0]}
                             width={150}
                             height={150}
                         />
                     </div>
                 )}
-                {name && <p className="pokemon-card__text">name: {name}</p>}
+                {!!name.length && (
+                    <p className="pokemon-card__text">
+                        {name.length === 1
+                            ? 'name: ' + name[0]
+                            : 'names: ' + name.join(', ')}
+                    </p>
+                )}
                 {!!abilities.length && (
                     <p className="pokemon-card__text">
-                        abilities:
-                        {abilities.join(', ')}
+                        abilities: {abilities.join(', ')}
                     </p>
                 )}
             </div>

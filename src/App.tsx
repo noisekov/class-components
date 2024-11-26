@@ -35,7 +35,7 @@ class App extends Component {
                     </div>
                 </div>
                 <button
-                    className="button--error"
+                    className="button button--error"
                     onClick={() => {
                         this.setState({ error: true });
                     }}

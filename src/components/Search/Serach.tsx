@@ -3,7 +3,7 @@ import './Search.css';
 import React, { Component, SyntheticEvent } from 'react';
 
 interface requestDataI {
-    name: string;
+    name: string[];
     abilities: string[];
     sprites: string;
 }
@@ -40,7 +40,7 @@ export default class Serach extends Component<SerachProps> {
         this.setState({ isLoading: true });
 
         const resultObj: requestDataI = {
-            name: '',
+            name: [],
             abilities: [],
             sprites: '',
         };
@@ -60,16 +60,14 @@ export default class Serach extends Component<SerachProps> {
         const data = await request.json();
 
         if (value) {
-            resultObj['name'] = data['name'];
-            resultObj['sprites'] = data['sprites']['front_default'];
-            data['abilities'].forEach(
-                (ability: { ability: { name: string } }) => {
-                    resultObj['abilities'].push(ability.ability.name);
-                }
-            );
+            resultObj.name.push(data.name);
+            resultObj.sprites = data.sprites.front_default;
+            data.abilities.forEach((ability: { ability: { name: string } }) => {
+                resultObj.abilities.push(ability.ability.name);
+            });
         } else {
             data.results.forEach((pokemon: { name: string; url: string }) => {
-                resultObj['name'] += pokemon.name + ', ';
+                resultObj.name.push(pokemon.name);
             });
         }
 
@@ -93,7 +91,9 @@ export default class Serach extends Component<SerachProps> {
         ) : (
             <form onSubmit={this.handleSubmit.bind(this)}>
                 <input type="search" className="input-search" />
-                <button type="submit">Search</button>
+                <button className="button" type="submit">
+                    Search
+                </button>
             </form>
         );
     }
