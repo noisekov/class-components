@@ -1,4 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 interface Props {
     children?: ReactNode;
@@ -13,7 +14,8 @@ export default class ErrorBoundary extends Component<Props, State> {
         hasError: false,
     };
 
-    public static getDerivedStateFromError(_: Error): State {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public static getDerivedStateFromError(error: Error): State {
         return { hasError: true };
     }
 
@@ -22,10 +24,6 @@ export default class ErrorBoundary extends Component<Props, State> {
     }
 
     render() {
-        if (this.state.hasError) {
-            return <h1>Sorry.. there was an error</h1>;
-        }
-
-        return this.props.children;
+        return this.state.hasError ? <ErrorPage /> : this.props.children;
     }
 }

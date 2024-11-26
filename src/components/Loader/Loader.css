@@ -1,3 +1,7 @@
+#root:has(.spinner-box) {
+    overflow: hidden;
+}
+
 .spinner-box {
     position: absolute;
     top: 0;
