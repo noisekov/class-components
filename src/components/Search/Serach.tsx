@@ -9,7 +9,6 @@ interface requestDataI {
 }
 interface SerachState {
     isLoading: boolean;
-    requestData: object;
 }
 
 interface SerachProps {
@@ -19,14 +18,12 @@ interface SerachProps {
 export default class Serach extends Component<SerachProps> {
     state: SerachState = {
         isLoading: false,
-        requestData: {},
     };
 
     constructor(props: SerachProps) {
         super(props);
         this.state = {
             isLoading: false,
-            requestData: {},
         };
     }
 
@@ -53,7 +50,7 @@ export default class Serach extends Component<SerachProps> {
         const { status } = await request;
 
         if (status !== 200) {
-            this.setState({ isLoading: false, requestData: resultObj });
+            this.setState({ isLoading: false });
             this.props.onInputData(resultObj);
         }
 
@@ -71,7 +68,7 @@ export default class Serach extends Component<SerachProps> {
             });
         }
 
-        this.setState({ isLoading: false, requestData: resultObj });
+        this.setState({ isLoading: false });
         this.props.onInputData(resultObj);
     }
 
