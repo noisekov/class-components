@@ -1,6 +1,6 @@
 import Loader from '../Loader/Loader';
 import './Search.css';
-import React, { Component, SyntheticEvent } from 'react';
+import { Component, SyntheticEvent } from 'react';
 
 interface requestDataI {
     name: string[];
