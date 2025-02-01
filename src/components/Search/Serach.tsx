@@ -9,6 +9,7 @@ interface requestDataI {
 }
 interface SerachState {
     isLoading: boolean;
+    userInput: string;
 }
 
 interface SerachProps {
@@ -18,12 +19,14 @@ interface SerachProps {
 export default class Serach extends Component<SerachProps> {
     state: SerachState = {
         isLoading: false,
+        userInput: '',
     };
 
     constructor(props: SerachProps) {
         super(props);
         this.state = {
             isLoading: false,
+            userInput: '',
         };
     }
 
@@ -34,7 +37,7 @@ export default class Serach extends Component<SerachProps> {
     }
 
     async request(value: string) {
-        this.setState({ isLoading: true });
+        this.setState({ isLoading: true, userInput: value });
 
         const resultObj: requestDataI = {
             name: [],
@@ -72,6 +75,12 @@ export default class Serach extends Component<SerachProps> {
         this.props.onInputData(resultObj);
     }
 
+    handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        this.setState({
+            userInput: event.target.value,
+        });
+    }
+
     async handleSubmit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
         event.preventDefault();
         const inputValue = (
@@ -83,11 +92,18 @@ export default class Serach extends Component<SerachProps> {
     }
 
     render() {
-        return this.state.isLoading ? (
+        const { isLoading, userInput } = this.state;
+
+        return isLoading ? (
             <Loader />
         ) : (
             <form onSubmit={this.handleSubmit.bind(this)}>
-                <input type="search" className="input-search" />
+                <input
+                    type="search"
+                    className="input-search"
+                    onChange={this.handleChange.bind(this)}
+                    value={userInput}
+                />
                 <button className="button" type="submit">
                     Search
                 </button>
