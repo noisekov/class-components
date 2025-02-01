@@ -1,0 +1,21 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.top {
+    height: 100px;
+}
+
+.page {
+    height: 100%;
+}
+
+.bottom {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
