@@ -25,10 +25,6 @@ export default class Pokemon extends Component<SerachProps> {
         },
     };
 
-    constructor(props: SerachProps) {
-        super(props);
-    }
-
     componentDidUpdate(prevProps: SerachProps) {
         if (!equal(this.props.onInputData, prevProps.onInputData)) {
             this.setState({ inputData: this.props.onInputData });
